@@ -28,6 +28,11 @@ class BaseballGameController {
 
     return [strikeCount, ballCount];
   }
+  resetGame() {
+    this.#computer.reset();
+
+    this.inputUserNumber();
+  }
 }
 
 module.exports = BaseballGameController;
