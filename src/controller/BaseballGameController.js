@@ -27,6 +27,10 @@ class BaseballGameController {
     const ballCount = this.#computer.getBallCount(userNumberArray, strikeCount);
 
     return [strikeCount, ballCount];
+  printHint(strikeCount, ballCount) {
+    printHintString(strikeCount, ballCount);
+
+    this.inputUserNumber();
   }
   resetGame() {
     this.#computer.reset();
