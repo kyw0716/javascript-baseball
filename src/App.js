@@ -1,7 +1,8 @@
+const { numberSize } = require("./constants/Constants");
 const BaseballGameController = require("./controller/BaseballGameController");
 
 class App {
-  #baseballGame = new BaseballGameController(3);
+  #baseballGame = new BaseballGameController(numberSize);
 
   constructor() {}
 

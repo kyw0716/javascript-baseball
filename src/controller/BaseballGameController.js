@@ -7,6 +7,7 @@ const {
   printHintString,
   printEndString,
 } = require("../view/OutputView");
+const { numberSize } = require("../constants/Constants");
 
 class BaseballGameController {
   #computer;
@@ -47,7 +48,7 @@ class BaseballGameController {
   handleInputOrEnd(strikeCount, ballCount) {
     printHintString(strikeCount, ballCount);
 
-    if (strikeCount === 3) {
+    if (strikeCount === numberSize) {
       printEndString();
       return this.inputRestartCommand();
     }
@@ -62,5 +63,3 @@ class BaseballGameController {
 }
 
 module.exports = BaseballGameController;
-
-new BaseballGameController(3).startGame();

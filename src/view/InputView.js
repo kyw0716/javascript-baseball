@@ -1,5 +1,9 @@
 const { Console } = require("@woowacourse/mission-utils");
-const { GuideString, ErrorString } = require("../constants/Constants");
+const {
+  GuideString,
+  ErrorString,
+  numberSize,
+} = require("../constants/Constants");
 
 const InputView = {
   readUserNumber(callback) {
@@ -19,7 +23,7 @@ const InputView = {
   validateUserNumber(input) {
     const inputArray = input.split("");
 
-    if (input.length !== 3)
+    if (input.length !== numberSize)
       throw new Error(ErrorString.USER_NUMBER_LENGTH_ERROR);
     if (input.replace(/[1-9]/g, "").length > 0)
       throw new Error(ErrorString.USER_NUMBER_NOT_NUMBER_ERROR);
