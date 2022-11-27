@@ -1,9 +1,9 @@
 const Computer = require("../Computer");
 const { GuideString } = require("../constants/Constants");
-const RandomNumberGenerator = require("../RandomNumberGenerator");
 const { getUserInput } = require("../view/InputView");
-const InputView = require("../view/InputView");
-const OutputView = require("../view/OutputView");
+const { Console } = require("@woowacourse/mission-utils");
+const RandomNumberGenerator = require("../RandomNumberGenerator");
+const { printStartString, printHintString } = require("../view/OutputView");
 
 class BaseballGameController {
   #computer;
@@ -13,25 +13,44 @@ class BaseballGameController {
   }
 
   startGame() {
-    OutputView.printStartString();
-    getUserInput();
+    printStartString();
+
+    this.inputUserNumber();
   }
 
   inputUserNumber() {
-    InputView.getUserInput(GuideString.INPUT_NUMBER, this.getHint.bind(this));
+    getUserInput(GuideString.INPUT_NUMBER, this.scoringUserNumber.bind(this));
   }
 
-  getHint(userNumber) {
-    const userNumberArray = userNumber.split("");
+  scoringUserNumber(userNumber) {
+    const userNumberArray = userNumber.split("").map((v) => Number(v));
     const strikeCount = this.#computer.getStrikeCount(userNumberArray);
     const ballCount = this.#computer.getBallCount(userNumberArray, strikeCount);
 
-    return [strikeCount, ballCount];
+    return this.handleInputOrEnd(strikeCount, ballCount);
+  }
+
+  handleInputOrEnd(strikeCount, ballCount) {
+    if (strikeCount === 3) return this.inputRestartCommand();
+    return this.printHint(strikeCount, ballCount);
+  }
+
+  inputRestartCommand() {
+    getUserInput(GuideString.RESTART, (input) => {
+      if (input === "1") {
+        this.resetGame();
+        return this.inputUserNumber();
+      }
+      if (input === "2") return Console.close();
+    });
+  }
+
   printHint(strikeCount, ballCount) {
     printHintString(strikeCount, ballCount);
 
     this.inputUserNumber();
   }
+
   resetGame() {
     this.#computer.reset();
 
@@ -40,3 +59,5 @@ class BaseballGameController {
 }
 
 module.exports = BaseballGameController;
+
+new BaseballGameController(3).startGame();
