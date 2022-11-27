@@ -1,6 +1,10 @@
 const { Random } = require("@woowacourse/mission-utils");
 
 const RandomNumberGenerator = {
+  /**
+   * @param {numer} size 생성하고자 하는 랜덤 숫자의 개수
+   * @returns (array) 랜덤 숫자 배열
+   */
   generate(size) {
     const randomNumbers = [];
 
@@ -15,5 +19,3 @@ const RandomNumberGenerator = {
 };
 
 module.exports = RandomNumberGenerator;
-
-console.log(RandomNumberGenerator.generate(4));
