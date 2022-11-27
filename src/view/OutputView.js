@@ -14,6 +14,10 @@ const OutputView = {
 
     Console.print(hint.join(" "));
   },
+
+  printEndString() {
+    Console.print(GuideString.END);
+  },
 };
 
 module.exports = OutputView;

@@ -1,5 +1,13 @@
+const BaseballGameController = require("./controller/BaseballGameController");
+
 class App {
-  play() {}
+  #baseballGame = new BaseballGameController(3);
+
+  constructor() {}
+
+  play() {
+    this.#baseballGame.startGame();
+  }
 }
 
 module.exports = App;

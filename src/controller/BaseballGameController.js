@@ -1,9 +1,12 @@
 const Computer = require("../Computer");
-const { GuideString } = require("../constants/Constants");
-const { getUserInput } = require("../view/InputView");
+const { readUserNumber, readRestartCommand } = require("../view/InputView");
 const { Console } = require("@woowacourse/mission-utils");
 const RandomNumberGenerator = require("../RandomNumberGenerator");
-const { printStartString, printHintString } = require("../view/OutputView");
+const {
+  printStartString,
+  printHintString,
+  printEndString,
+} = require("../view/OutputView");
 
 class BaseballGameController {
   #computer;
@@ -19,24 +22,20 @@ class BaseballGameController {
   }
 
   inputUserNumber() {
-    getUserInput(GuideString.INPUT_NUMBER, this.scoringUserNumber.bind(this));
-  }
+    readUserNumber((userNumber) => {
+      const userNumberArray = userNumber.split("").map((v) => Number(v));
+      const strikeCount = this.#computer.getStrikeCount(userNumberArray);
+      const ballCount = this.#computer.getBallCount(
+        userNumberArray,
+        strikeCount
+      );
 
-  scoringUserNumber(userNumber) {
-    const userNumberArray = userNumber.split("").map((v) => Number(v));
-    const strikeCount = this.#computer.getStrikeCount(userNumberArray);
-    const ballCount = this.#computer.getBallCount(userNumberArray, strikeCount);
-
-    return this.handleInputOrEnd(strikeCount, ballCount);
-  }
-
-  handleInputOrEnd(strikeCount, ballCount) {
-    if (strikeCount === 3) return this.inputRestartCommand();
-    return this.printHint(strikeCount, ballCount);
+      return this.handleInputOrEnd(strikeCount, ballCount);
+    });
   }
 
   inputRestartCommand() {
-    getUserInput(GuideString.RESTART, (input) => {
+    readRestartCommand((input) => {
       if (input === "1") {
         this.resetGame();
         return this.inputUserNumber();
@@ -45,10 +44,14 @@ class BaseballGameController {
     });
   }
 
-  printHint(strikeCount, ballCount) {
+  handleInputOrEnd(strikeCount, ballCount) {
     printHintString(strikeCount, ballCount);
 
-    this.inputUserNumber();
+    if (strikeCount === 3) {
+      printEndString();
+      return this.inputRestartCommand();
+    }
+    return this.inputUserNumber();
   }
 
   resetGame() {
