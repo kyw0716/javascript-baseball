@@ -1,4 +1,4 @@
-const RandomNumberGenerator = require("./RandomNumberGenerator");
+const { generateRandomNumber } = require("./utils/RandomNumberGenerator");
 
 class Computer {
   #answer;
@@ -37,7 +37,7 @@ class Computer {
   }
 
   reset() {
-    this.#answer = RandomNumberGenerator.generate(this.#answer.length);
+    this.#answer = generateRandomNumber(this.#answer.length);
   }
 }
 

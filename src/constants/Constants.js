@@ -1,3 +1,5 @@
+const numberSize = 3;
+
 const GuideString = Object.freeze({
   START: "숫자 야구 게임을 시작합니다.",
   INPUT_NUMBER: "숫자를 입력해주세요 : ",
@@ -12,7 +14,5 @@ const ErrorString = Object.freeze({
   RESTART_COMMAND_NOT_COMMAND_ERROR: `입력값에 1, 2가 아닌 다른 값이 포함돼있습니다. 1과 2중 하나를 선택해 입력해주세요.`,
   RESTART_COMMAND_LENGTH_ERROR: `입력값의 개수가 유효하지 않습니다. 1과 2중 하나를 선택해 입력해주세요.`,
 });
-
-const numberSize = 3;
 
 module.exports = { GuideString, ErrorString, numberSize };

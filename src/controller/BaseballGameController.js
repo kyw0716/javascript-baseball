@@ -1,7 +1,7 @@
 const Computer = require("../Computer");
 const { readUserNumber, readRestartCommand } = require("../view/InputView");
 const { Console } = require("@woowacourse/mission-utils");
-const RandomNumberGenerator = require("../RandomNumberGenerator");
+const { generateRandomNumber } = require("../utils/RandomNumberGenerator");
 const {
   printStartString,
   printHintString,
@@ -13,7 +13,7 @@ class BaseballGameController {
   #computer;
 
   constructor(size) {
-    this.#computer = new Computer(RandomNumberGenerator.generate(size));
+    this.#computer = new Computer(generateRandomNumber(size));
   }
 
   startGame() {
